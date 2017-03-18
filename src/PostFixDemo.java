@@ -9,6 +9,8 @@ public class PostFixDemo {
 		String infix = "(1+2)*(3-4)";
 		String postfix = infixToPostFix(infix);
 		System.out.println("Postfix conversion: " + postfix);
+		int postfixResult = computePostfix(postfix);
+		System.out.println("Postfix result: " + postfixResult);
 	}
 	
 	/*Step 1: If you see a number, add it to the string.
@@ -63,6 +65,60 @@ public class PostFixDemo {
 			 }
 		 }
 		 return postfix;		
+	}
+	
+	/*Step 2: if we see a number, we push it into the stack
+	 * 		  if we see an operation symbol, we pop the top 
+	 * 		  two numbers, perform the mathematical operation
+	 * 		  and push the result back into the stack
+	 */
+	public static int computePostfix(String postfix){
+		System.out.println("Now in computePostfix");
+		Stack s = new Stack();
+		for(int i=0; i<postfix.length();i++){
+			if(postfix.charAt(i)== '+' || postfix.charAt(i) == '-'||postfix.charAt(i)=='*'||postfix.charAt(i)=='/'){
+				performOperation(s,postfix.charAt(i));
+			}
+			else{//it's a number
+				s.push(postfix.charAt(i));
+				System.out.println("Top of stack: " + s.peek());
+			}
+		}
+		//last item in the stack
+		int result = (int)s.pop();
+		return result;
+		
+	}
+	
+	public static void performOperation(Stack s, char operator){
+		int operand1;
+		int operand2;
+		int result;
+		switch(operator){
+			case '+':
+				operand2 = Character.getNumericValue((char) s.pop());
+				operand1 = Character.getNumericValue((char)s.pop());
+				result = operand1 + operand2;
+				s.push(result);
+				break;
+			case '-':
+				operand2 = Character.getNumericValue((char)s.pop());
+				operand1 = Character.getNumericValue((char)s.pop());
+				result = operand1 - operand2;
+				s.push(result);
+				break;
+			case '*':
+				operand2 = Character.getNumericValue((char)s.pop());
+				operand1 = Character.getNumericValue((char)s.pop());
+				result = operand1 * operand2;
+				s.push(result);
+				break;
+			case '/':
+				operand2 = Character.getNumericValue((char)s.pop());
+				operand1 = Character.getNumericValue((char)s.pop());
+				result = operand1/operand2;
+				break;
+		}
 	}
 
 }
