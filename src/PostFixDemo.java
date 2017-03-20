@@ -6,6 +6,7 @@
 import java.util.*;
 public class PostFixDemo {	
 	public static void main(String[]args){
+		//"(1+2)*(3-4)"
 		String infix = "(1+2)*(3-4)";
 		String postfix = infixToPostFix(infix);
 		System.out.println("Postfix conversion: " + postfix);
@@ -51,7 +52,7 @@ public class PostFixDemo {
 			 }			 
 		 }
 		 /*We have gone through the entire length of infix.
-		  * Now, we need to fo through whatever's left in the stack
+		  * Now, we need to for through whatever's left in the stack
 		  * and pop ('s and )'s and concatenating operators
 		  * at the end of postfix
 		  */
@@ -80,7 +81,7 @@ public class PostFixDemo {
 				performOperation(s,postfix.charAt(i));
 			}
 			else{//it's a number
-				s.push(postfix.charAt(i));
+				s.push(Character.getNumericValue((char)postfix.charAt(i)));
 				System.out.println("Top of stack: " + s.peek());
 			}
 		}
@@ -91,32 +92,42 @@ public class PostFixDemo {
 	}
 	
 	public static void performOperation(Stack s, char operator){
+		System.out.println("Now in performOperation");
 		int operand1;
 		int operand2;
 		int result;
 		switch(operator){
 			case '+':
-				operand2 = Character.getNumericValue((char) s.pop());
-				operand1 = Character.getNumericValue((char)s.pop());
+				System.out.println("performed addition");
+				operand2 = (int)s.pop();
+				operand1 = (int)s.pop();
 				result = operand1 + operand2;
+				System.out.println("result: " + result);
 				s.push(result);
 				break;
 			case '-':
-				operand2 = Character.getNumericValue((char)s.pop());
-				operand1 = Character.getNumericValue((char)s.pop());
+				System.out.println("performed subtraction");
+				operand2 = (int)s.pop();
+				operand1 = (int)s.pop();
 				result = operand1 - operand2;
+				System.out.println("result: " + result);
 				s.push(result);
 				break;
 			case '*':
-				operand2 = Character.getNumericValue((char)s.pop());
-				operand1 = Character.getNumericValue((char)s.pop());
+				System.out.println("performed multiplication");
+				operand2 = (int)s.pop();//Character.getNumericValue((char)s.pop());
+				operand1 = (int)s.pop();
 				result = operand1 * operand2;
+				System.out.println("result: " + result);
 				s.push(result);
 				break;
 			case '/':
-				operand2 = Character.getNumericValue((char)s.pop());
-				operand1 = Character.getNumericValue((char)s.pop());
+				System.out.println("performed division");
+				operand2 = (int)s.pop();
+				operand1 = (int)s.pop();
 				result = operand1/operand2;
+				System.out.println("result: " + result);
+				s.push(result);
 				break;
 		}
 	}
